@@ -8,7 +8,12 @@ RUN mkdir -p $CATKIN_WS/src
 WORKDIR $CATKIN_WS/src
 
 # installing mongocxx driver for the warehouse
+# &" is used to chain commands together, 
+#such that the next command is run if and only if the preceding command exited without errors 
+# (or, more accurately, exits with a return code of 0).
+# "\" by itself at the end of a line is a means of concatenating lines together.
 RUN git clone -b 26compat https://github.com/mongodb/mongo-cxx-driver.git && \
+    # -qq: No output except for errors
     apt-get update -qq && \
     apt-get -qq install -y scons mongodb && \
     cd mongo-cxx-driver && \
